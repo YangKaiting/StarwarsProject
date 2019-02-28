@@ -1,0 +1,28 @@
+.example-fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.mat-list-item{
+    margin: 15px;
+    width:100%;    
+}
+
+.mat-list-item button{
+    
+    text-transform: capitalize;
+    width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* .mat-drawer {
+    background-color: rgb(40, 40, 40);
+    padding: 10px;
+}
+
+.mat-drawer button{
+    color: white;
+    font-size: 20px
+} */
