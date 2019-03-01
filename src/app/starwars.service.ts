@@ -10,9 +10,7 @@ const baseURL = 'https://swapi.co/api/';
 })
 export class StarWarsService {
   private db: Dexie;
-  private navigator: NgNavigatorShareService;
-
-  constructor(private http: HttpClient) {
+  constructor(private navigator: NgNavigatorShareService, private http: HttpClient) {
     this.db = new Dexie('starwarsDb');
     this.db.version(1).stores({
       // ++id
@@ -52,15 +50,14 @@ export class StarWarsService {
   }
 
   share(url: string) {
-    if (this.navigator.share) {
-      this.navigator.share({
-        title: 'star wars',
-        text: 'character info',
-        url: url,
-      })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing', error));
-    }
+    return (this.navigator.share({
+      title: 'star wars',
+      text: 'character info',
+      url: url,
+    })
+      .then((res) => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing', error))
+    );
   }
 
 }

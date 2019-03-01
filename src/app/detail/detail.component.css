@@ -10,12 +10,37 @@
     width:100%;
 }
 
-.mat-drawer-container button{
+/* .mat-drawer-container button{
     text-transform: uppercase;
     width:40%;
     margin-left: 20%;
     margin-right: 40%;
-    /* padding-top: 10px;
-    padding-bottom: 10px; */
     text-align:left;
+} */
+
+.buttonStyle1{
+    text-transform: uppercase;
+    width:40%;
+    margin-left: 20%;
+    margin-right: 40%;
+    text-align:left;
+}
+
+.wordStyle1{
+    font-weight: bold;
+    vertical-align: top;
+    text-transform: capitalize;  
+    padding:10px;
+}
+
+.wordStyle2{
+    
+    font-style: italic;
+    text-transform: capitalize;
+}
+
+table {
+    margin-left:auto; 
+    margin-right:auto;
+    border: 1px solid black;
 }

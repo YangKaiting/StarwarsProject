@@ -47,17 +47,59 @@ export class DetailComponent implements OnInit, OnDestroy {
             continue;
 
           if (param == 'homeworld') {
-            this.details.push({
-              key: param,
-              value: [result[param]]
-            })
+            let tempArr: Array<string> = result[param].split('/').filter(el => el != "");
+            this.svc.GetItem(tempArr[tempArr.length - 2], tempArr[tempArr.length - 1])
+              .then((res) => {
+                let tempObj = {
+                  key: res['title'] == null ? res['name'] : res['title'],
+                  category: tempArr[tempArr.length - 2],
+                  id: tempArr[tempArr.length - 1]
+                };
+
+                this.details.push({
+                  key: param,
+                  value: [tempObj]
+                })
+                console.log(tempObj);
+
+              })
+              .catch((err) => console.log(err));
             continue;
           }
 
-          this.details.push({
-            key: param,
-            value: result[param]
-          })
+          // convert to object array
+          if (result[param] instanceof Array == false) {
+            this.details.push({
+              key: param,
+              value: result[param]
+            })
+          } else {
+
+            let resArr = [];
+            for (let url of result[param]) {
+              let tempArr: Array<string> = url.split('/').filter(el => el != "");
+              this.svc.GetItem(tempArr[tempArr.length - 2], tempArr[tempArr.length - 1])
+                .then((res) => {
+                  let tempObj = {
+                    key: res['title'] == null ? res['name'] : res['title'],
+                    category: tempArr[tempArr.length - 2],
+                    id: tempArr[tempArr.length - 1]
+                  };
+
+                  resArr.push(tempObj);
+                })
+                .catch((err) => console.log(err));
+            }
+
+            // add to the array
+            this.details.push({
+              key: param,
+              value: resArr
+            })
+            console.log(resArr);
+          }
+
+
         }
 
         console.log(this.details);
@@ -71,9 +113,12 @@ export class DetailComponent implements OnInit, OnDestroy {
 
     this.svc.addCommentToDexie(tempId, tempComment)
       .then((result) => {
-        console.info('Inserted >> ', result);
+        window.alert('succeeded')
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        window.alert('failed')
+      });
   }
 
   private readComment(category: string, id: string) {
@@ -95,7 +140,10 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   share() {
-    // this.svc.share(this.router.url);
+    let tempUrl = `https://57chi.github.io/star-wars${this.router.url}`;
+    this.svc.share(tempUrl)
+      .then(res => window.alert('succeeded'))
+      .catch(res => window.alert('failed'));
   }
 
   ngOnDestroy() {

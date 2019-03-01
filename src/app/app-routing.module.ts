@@ -6,6 +6,7 @@ import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   { path: '', component: CategoryComponent },
+  { path: "home", component: CategoryComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'item/:category', component: ItemComponent },
   { path: 'detail/:category/:id', component: DetailComponent },

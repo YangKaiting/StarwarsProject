@@ -11,32 +11,42 @@
 
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
-    <button mat-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
+    <button class="buttonStyle1" mat-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
     <mat-menu #menu="matMenu">
       <a mat-button [routerLink]="['/category']">Home</a>
     </mat-menu>
   </mat-drawer>
   <mat-drawer-content fxLayout="column" fxLayoutAlign="center">
 
-    <img src={{imageURL}}>
-
-    <div *ngFor="let d of details">
-
-      <div *ngIf="!isArray(d.value); else elseBlock">
-        <p>{{d.key}} - {{d.value}}</p>
-      </div>
-      <ng-template #elseBlock>
-        --------{{d.key}}--------
-        <div *ngFor="let myValue of d.value">{{ myValue }}</div>
-      </ng-template>
-    </div>
+    <table>
+      <tr>
+        <td [colSpan]=2><img src={{imageURL}}></td>
+      </tr>
+      <tr *ngFor="let d of details">
+        <td class="wordStyle1">{{d.key}}</td>
+        <td *ngIf="!isArray(d.value)">{{d.value}}<br /></td>
+        <td class="wordStyle2" *ngIf="isArray(d.value)">
+          <div *ngFor="let o of d.value">
+            <a mat-button [routerLink]="['/detail',o.category,o.id]">
+              <mat-icon>visibility</mat-icon>
+              {{o.key}}
+            </a>
+          </div>
+          <br />
+        </td>
+      </tr>
+    </table>
 
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-      <mat-form-field>
-        <textarea type="text" name="myComment" matInput placeholder="Comment Here" required [(ngModel)]='commentValue'>
+      <div fxLayout="column" fxLayoutAlign="center center">
+
+        <mat-form-field>
+          <textarea type="text" name="myComment" matInput placeholder="Comment Here" required
+            [(ngModel)]='commentValue'>
         </textarea>
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+      </div>
     </form>
 
   </mat-drawer-content>

@@ -12,6 +12,7 @@ import { Item } from '../model/Item';
 export class ItemComponent implements OnInit, OnDestroy {
 
   private sub: any;
+  pageEvent: PageEvent;
   category: string;
 
   len: number;
