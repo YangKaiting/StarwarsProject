@@ -1,3 +1,43 @@
-<p>
-  detail works!
-</p>
+<mat-toolbar color="primary">
+  <span>Star Wars</span>
+  <span class="example-fill-remaining-space"></span>
+  <button type="submit" mat-button (click)="share()">
+    <mat-icon>share</mat-icon>
+  </button>
+  <a mat-button [routerLink]="['/item',category]">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+</mat-toolbar>
+
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <button mat-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <a mat-button [routerLink]="['/category']">Home</a>
+    </mat-menu>
+  </mat-drawer>
+  <mat-drawer-content fxLayout="column" fxLayoutAlign="center">
+
+    <img src={{imageURL}}>
+
+    <div *ngFor="let d of details">
+
+      <div *ngIf="!isArray(d.value); else elseBlock">
+        <p>{{d.key}} - {{d.value}}</p>
+      </div>
+      <ng-template #elseBlock>
+        --------{{d.key}}--------
+        <div *ngFor="let myValue of d.value">{{ myValue }}</div>
+      </ng-template>
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <mat-form-field>
+        <textarea type="text" name="myComment" matInput placeholder="Comment Here" required [(ngModel)]='commentValue'>
+        </textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+    </form>
+
+  </mat-drawer-content>
+</mat-drawer-container>

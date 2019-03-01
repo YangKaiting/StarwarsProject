@@ -1,3 +1,28 @@
-<p>
-  item works!
-</p>
+<mat-toolbar color="primary">
+  <span>Star Wars</span>
+  <span class="example-fill-remaining-space"></span>
+  <a mat-button [routerLink]="['/category']">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+</mat-toolbar>
+
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <button mat-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <a mat-button [routerLink]="['/category']">Home</a>
+    </mat-menu>
+  </mat-drawer>
+  <mat-drawer-content fxLayout="column" fxLayoutAlign="center">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let i of items">
+        <button mat-stroked-button color="primary" (click)="showInfo(i.value)">
+          <mat-icon>visibility</mat-icon>
+          {{i.key}}
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+    <mat-paginator [length]="len" [pageSize]="10" (page)="pageEvent = getServerData($event)">
+    </mat-paginator>
+  </mat-drawer-content>
+</mat-drawer-container>

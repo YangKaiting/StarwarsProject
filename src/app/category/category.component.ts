@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StarWarsService } from '../starwars.service';
 import { Category } from '../model/Category';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -9,16 +10,14 @@ import { Category } from '../model/Category';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor(private svc: StarWarsService) { }
+  constructor(private svc: StarWarsService, private router: Router) { }
 
   categories: Category[] = [];
 
   ngOnInit() {
     this.svc.AllCategory()
       .then((result) => {
-
         for (let k of Object.keys(result)) {
-          // console.log(`key: ${k} - value: ${result[k]}`);
           this.categories.push({
             name: k,
             url: result[k]
@@ -30,8 +29,9 @@ export class CategoryComponent implements OnInit {
 
   }
 
-  showInfo(url) {
-    console.log(url);
+  showInfo(name) {
+    console.log(name);
+    this.router.navigate(['/item', name]);
   }
 
 }

@@ -1,40 +1,23 @@
 <mat-toolbar color="primary">
   <span>Star Wars</span>
   <span class="example-fill-remaining-space"></span>
-  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Home</button>
-  </mat-menu>
 </mat-toolbar>
 
-<div fxLayout="column" fxLayoutAlign="center">
-  <mat-nav-list>
-    <mat-list-item *ngFor="let c of categories">
-      <button mat-raised-button (click)="showInfo(c.url)">
-        <mat-icon>pageview</mat-icon>
-        {{c.name}}
-      </button>
-    </mat-list-item>
-  </mat-nav-list>
-</div>
-
-<!-- <mat-drawer-container class="example-container">
+<mat-drawer-container>
   <mat-drawer mode="side" opened>
-    <button mat-button [matMenuTriggerFor]="menu">Star Wars</button>
+    <button mat-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Home</button>
+      <a mat-button [routerLink]="['/category']">Home</a>
     </mat-menu>
   </mat-drawer>
-  <mat-drawer-content>
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <mat-nav-list>
-        <mat-list-item *ngFor="let c of categories">
-          <button mat-raised-button (click)="showInfo(c.url)">
-            <mat-icon>pageview</mat-icon>
-            {{c.name}}
-          </button>
-        </mat-list-item>
-      </mat-nav-list>
-    </div>
+  <mat-drawer-content fxLayout="column" fxLayoutAlign="center">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let c of categories">
+        <button mat-stroked-button color="primary" (click)="showInfo(c.name)">
+          <mat-icon>pageview</mat-icon>
+          {{c.name}}
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-drawer-content>
-</mat-drawer-container> -->
+</mat-drawer-container>

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
+import Dexie from 'dexie';
+import { NgNavigatorShareService } from 'ng-navigator-share';
 
 const baseURL = 'https://swapi.co/api/';
 
@@ -7,14 +9,58 @@ const baseURL = 'https://swapi.co/api/';
   providedIn: 'root'
 })
 export class StarWarsService {
+  private db: Dexie;
+  private navigator: NgNavigatorShareService;
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {
+    this.db = new Dexie('starwarsDb');
+    this.db.version(1).stores({
+      // ++id
+      starwarsDb: 'id,comment'
+    })
+  }
 
   AllCategory() {
     return (
       this.http.get(baseURL).toPromise()
     );
+  }
+
+  AllItem(category: string, page: number) {
+    return (
+      this.http.get(`${baseURL}${category}/?page=${page}`).toPromise()
+    );
+  }
+
+  GetItem(category: string, id: string) {
+    return (
+      this.http.get(`${baseURL}${category}/${id}`).toPromise()
+    );
+  }
+
+  addCommentToDexie(id: string, comment: string): Promise<any> {
+    return (
+      this.db.table('starwarsDb').put({
+        id: id,
+        comment: comment
+      })
+    );
+  }
+
+  getCommentFromDexie(id: string): Promise<Comment[]> {
+    return (this.db.table('starwarsDb').where('id').equals(id).first());
+  }
+
+  share(url: string) {
+    if (this.navigator.share) {
+      this.navigator.share({
+        title: 'star wars',
+        text: 'character info',
+        url: url,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
   }
 
 }

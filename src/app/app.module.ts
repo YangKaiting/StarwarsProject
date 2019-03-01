@@ -9,6 +9,7 @@ import { ItemComponent } from './item/item.component';
 import { DetailComponent } from './detail/detail.component';
 import { StarWarsService } from './starwars.service';
 import { AppMaterialModule } from './app-material.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AppMaterialModule } from './app-material.module';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    AppMaterialModule
+    AppMaterialModule,
+    FormsModule
   ],
   providers: [StarWarsService],
   bootstrap: [AppComponent]

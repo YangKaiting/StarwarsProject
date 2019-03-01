@@ -5,9 +5,11 @@ import { ItemComponent } from './item/item.component';
 import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
+  { path: '', component: CategoryComponent },
   { path: 'category', component: CategoryComponent },
-  { path: 'item', component: ItemComponent },
-  { path: 'detail', component: DetailComponent }
+  { path: 'item/:category', component: ItemComponent },
+  { path: 'detail/:category/:id', component: DetailComponent },
+  { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({
