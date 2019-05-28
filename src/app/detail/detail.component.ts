@@ -19,10 +19,14 @@ export class DetailComponent implements OnInit, OnDestroy {
   commentValue: string;
   details: Detail[] = [];
 
-  constructor(private location: Location, private svc: StarWarsService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private location: Location, private svc: StarWarsService, private router: Router, private route: ActivatedRoute) {
+
+  }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
+      this.clearInfo();
+
       this.category = params['category'];
       this.id = params['id'];
       let queryC = this.category;
@@ -36,6 +40,14 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.getItemInfo();
       this.readComment(this.category, this.id);
     });
+  }
+
+  private clearInfo() {
+    this.category = null;
+    this.id = null;
+    this.imageURL = null;
+    this.commentValue = null;
+    this.details = [];
   }
 
   private getItemInfo() {
